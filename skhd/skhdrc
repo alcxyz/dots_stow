@@ -1,7 +1,7 @@
 # APPS #
 #
-# Safari
-alt - s : run-external "open" "-a" "/Applications/Safari.app/Contents/MacOS/Safari"
+# Zen-Browser 
+alt - z : run-external "open" "-a" "/Applications/Zen Browser.app/Contents/MacOS/zen"
 
 # Telegram
 alt - t : run-external "open" "-a" "/Applications/Telegram.app/Contents/MacOS/Telegram"
@@ -15,9 +15,6 @@ alt - d : osascript ~/.config/skhd/applescripts/pop.scpt
 # Close notifications
 ralt - n : osascript ~/.config/skhd/applescripts/notifications.scpt
 
-# Notion
-lalt - n : run-external "open" "-a" "/Applications/Notion.app/Contents/MacOS/Notion"
-
 # Min
 ralt - m : run-external "open" "-a" "/Applications/Min.app/Contents/MacOS/Min"
 
@@ -29,3 +26,6 @@ alt - f : run-external "open" "-a" `/Applications/Final Cut Pro.app/Contents/Mac
 
 # Ghostty
 alt - g : run-external "open" "-a" "/Applications/Ghostty.app"
+
+# Wezterm
+ctrl - space : run-external "open" "-a" "/Applications/WezTerm.app"
