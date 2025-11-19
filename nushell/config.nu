@@ -277,7 +277,17 @@ $env.config = {
     }
 
     hooks: {
-        pre_prompt: [{ null }] # run before the prompt is shown
+        pre_prompt: [{|| 
+            if (which direnv | is-empty) {
+                return
+            }
+            try {
+                direnv export json | from json | default {} | load-env
+                if 'PATH' in $env {
+                    $env.PATH = ($env.PATH | split row (char esep))
+                }
+            } catch {}
+        }]
         pre_execution: [{ null }] # run before the repl input is run
         env_change: {
             PWD: [{|before, after| null }] # run if the PWD environment is different since the last repl input
@@ -903,11 +913,11 @@ alias lt = eza --tree --level=2 --long --icons --git
 alias v = nvim
 alias hms = /nix/store/6kc5srg83nkyg21am089xx7pvq44kn2c-home-manager/bin/home-manager switch
 alias as = aerospace
+alias asr = atuin scripts run
 
 def ff [] {
     aerospace list-windows --all | fzf --bind 'enter:execute(bash -c "aerospace focus --window-id {1}")+abort'
 }
-
 
 # Git
 alias gc = git commit -m
@@ -945,3 +955,18 @@ source ~/.zoxide.nu
 source ~/.cache/carapace/init.nu
 source ~/.local/share/atuin/init.nu
 use ~/.cache/starship/init.nu
+
+let ruby_ver = "3.4.0"
+let gem_home = ($nu.home-path | path join ".gem" "ruby" $ruby_ver)
+let gem_bin = ($gem_home | path join "bin")
+
+# Set GEM paths
+$env.GEM_HOME = $gem_home
+$env.GEM_PATH = $gem_home
+
+# Add gem bin to PATH if it exists
+if ($gem_bin | path exists) {
+  $env.PATH = ($env.PATH | prepend $gem_bin)
+}
+$env.DIRENV_LOG_FORMAT = ""
+
